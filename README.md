@@ -1,11 +1,15 @@
 # Pico-Environment
 Isolated environment using Docker for development on Raspberry Pi Pico W
 
+## Make share folder on host computer to store uf2 files
+```bash
+mkdir ~/PicoEnv-share
+```
 
 ## Build image and create container
 ```bash
 docker build -t pico-dev-environment .
-docker run --name Pico-Dev -it pico-dev-environment
+docker run -p 2222:22 -v ${HOME}/PicoEnv-share:/home/devuser/share --name Pico-Dev -it pico-dev-environment
 ```
 
 ## Git config
