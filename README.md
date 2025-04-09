@@ -6,7 +6,7 @@ Isolated environment using Docker for development on Raspberry Pi Pico W
 mkdir ~/PicoEnv-share
 ```
 
-## Build image and create container
+## Build image, create container & link hostfolder to container folder
 ```bash
 docker build -t pico-dev-environment .
 docker run -p 2222:22 -v ${HOME}/PicoEnv-share:/home/devuser/share --name Pico-Dev -it pico-dev-environment
