@@ -11,6 +11,10 @@ mkdir ~/PicoEnv-share
 docker build -t pico-dev-environment .
 docker run -p 2222:22 -v ${HOME}/PicoEnv-share:/home/devuser/share --name Pico-Dev -it pico-dev-environment
 ```
+## SSH into container (Default password is 'dev')
+```bash
+ssh devuser@localhost -p 2222
+```
 
 ## Git config
 ```bash
