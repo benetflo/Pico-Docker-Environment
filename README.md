@@ -1,5 +1,5 @@
 # Pico-Environment
-Isolated environment for development on Raspberry Pi Pico W
+Isolated environment using Docker for development on Raspberry Pi Pico W
 
 
 ## Build image and create container
