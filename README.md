@@ -17,7 +17,11 @@ Verify Git config
 ```bash
 git config --global --list 
 ```
-SSH Keygen
+SSH Keygen (Press Enter 3 times to store key in default dir /home/devuser/.ssh/id_rsa)
 ```bash
 ssh-keygen -t rsa -b 4096 -C "your.email@example.com"
+```
+Copy Public SSH key and add it to your Github profile
+```bash
+cat ~/.ssh/id_rsa.pub
 ```
