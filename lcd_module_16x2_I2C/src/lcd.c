@@ -1,23 +1,8 @@
 #include "hardware/i2c.h"
+#include "lcd.h"
 
-const int CLEAR_SCREEN = 0b01;
-const int RETURN_HOME = 0b02;
-const int LCD_ENTRYMODESET = 0b04;
-const int LCD_DISPLAYCONTROL = 0b08;
-const int LCD_FUNCTIONSET = 0x20;   // to binary
-const int LCD_SETDDRAMADDR = 0x80;  // to binary
 
-const int LCD_ENTRYLEFT = 0b02;
-const int LCD_DISPLAYON = 0b04;
-const int LCD_2LINE = 0b08;
-
-const int LCD_BACKLIGHT = 0b08;
-const int LCD_ENABLE_BIT = 0b04;
-
-#define LCD_CHARACTER 1
-#define LCD_COMMAND 0
-
-static int i2c_addr = 63;
+static int i2c_addr = 39;
 
 void i2c_write_byte(uint8_t value){
 	i2c_write_blocking(i2c0, i2c_addr, &value, 1, false);
@@ -47,6 +32,19 @@ void lcd_send_byte(uint8_t value, int mode){
 void lcd_clear(void){
 	lcd_send_command(LCD_CLEAR_SCREEN);
 	sleep_ms(2);
+}
+
+void lcd_char(char value){
+	lcd_send_byte(value, LCD_CHARACTER);
+}
+
+void lcd_set_cursor(uint8_t row, uint8_t col){
+	uint8_t address = (row == 0) ? 0x00 + col : 0x40 + col;
+	lcd_send_command(0x80 | address);
+}
+
+void lcd_send_command(uint8_t value){
+	lcd_send_byte(value, LCD_COMMAND);
 }
 
 void lcd_init(void) {
