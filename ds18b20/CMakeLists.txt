@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(test LANGUAGES C CXX ASM)
+project(test)
 
 set(PICO_BOARD pico_w)
 
@@ -12,10 +12,3 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 pico_sdk_init()
 
 add_subdirectory(src)
-
-pico_add_extra_outputs(${PROJECT_NAME})
-
-target_link_libraries(${PROJECT_NAME}
-    pico_stdlib
-    pico_hardware
-)
