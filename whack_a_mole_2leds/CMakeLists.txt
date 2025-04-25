@@ -4,13 +4,11 @@ set(PICO_BOARD pico_w)
 
 include($ENV{PICO_SDK_PATH}/external/pico_sdk_import.cmake)
 
-project(ir_test C CXX ASM)
+project(mini_game C CXX ASM)
+
+pico_sdk_init()
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-pico_sdk_init()
-
 add_subdirectory(src)
-
-pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/src/ir_reciever.pio)

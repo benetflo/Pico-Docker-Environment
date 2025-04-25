@@ -1,25 +1,15 @@
-.program ir_receiver
-.side_set 0
+.program ir_reciever_program
 
 start:
-    wait 0 pin
+	wait 0 pin
+	set x, 0
 
-count_low:
-    set x, 0
-.loop_low:
-    jmp pin, done_low
-    jmp x--, .loop_low
-done_low:
-    mov isr, x
-    push
 
-count_high:
-    set x, 0
-.loop_high:
-    jmp !pin, done_high
-    jmp x--, .loop_high
-done_high:
-    mov isr, x
-    push
+loop:
+	jmp pin, end
+	jmp x--, loop
 
-    jmp start
+end:
+	mov isr, x
+	push
+
