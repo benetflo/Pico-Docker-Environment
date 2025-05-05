@@ -10,7 +10,7 @@ int main(){
 
 	gpio_pwm_setup(BUZZER);
 	while(1){
-		melody_stormwind(BUZZER);
+		melody_careless_whisper(BUZZER);
 	}
 	return 0;
 }

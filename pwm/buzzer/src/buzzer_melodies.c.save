@@ -21,7 +21,7 @@ void play_tone(uint gpio_pin, uint freq, uint duration){
 
         pwm_set_clkdiv(slice_num, div);
         pwm_set_wrap(slice_num, wrap);
-        pwm_set_chan_level(slice_num, pwm_gpio_to_channel(gpio_pin), wrap / 10);
+        pwm_set_chan_level(slice_num, pwm_gpio_to_channel(gpio_pin), wrap / 2);
 
         sleep_ms(duration);
 
@@ -73,48 +73,11 @@ void melody_stormwind(uint gpio_pin){
 
 void melody_careless_whisper(uint gpio_pin){
 
-	int d_minor[] = {220, 233, 261, 293, 329, 349, 392, 440, 466, 523, 587, 659, 698};
+	int d_minor[] = {293, 311, 349, 392, 440, 466, 523, 587, 659};
 
-	play_tone(gpio_pin, d_minor[11] * 2, 400);
-	play_tone(gpio_pin, d_minor[10] * 2, 200);
-	play_tone(gpio_pin, d_minor[7] * 2, 400);
-	play_tone(gpio_pin, d_minor[5] * 2, 200);
-	sleep_ms(200);
-	play_tone(gpio_pin, d_minor[11] * 2, 600);
-        play_tone(gpio_pin, d_minor[10] * 2, 200);
-        play_tone(gpio_pin, d_minor[7] * 2, 400);
-        play_tone(gpio_pin, d_minor[5] * 2, 200);
-
-	sleep_ms(400);
-
-	play_tone(gpio_pin, d_minor[9] * 2, 400);
-        play_tone(gpio_pin, d_minor[8] * 2, 200);
-        play_tone(gpio_pin, d_minor[5] * 2, 400);
-        play_tone(gpio_pin, d_minor[3] * 2, 200);
-	sleep_ms(200);
-	play_tone(gpio_pin, d_minor[9] * 2, 600);
-        play_tone(gpio_pin, d_minor[8] * 2, 200);
-        play_tone(gpio_pin, d_minor[5] * 2, 400);
-        play_tone(gpio_pin, d_minor[3] * 2, 200);
-
-	sleep_ms(400);
-
-	play_tone(gpio_pin, d_minor[8] * 2, 400);
-	play_tone(gpio_pin, d_minor[7] * 2, 200);
-	play_tone(gpio_pin, d_minor[5] * 2, 400);
-	play_tone(gpio_pin, d_minor[3] * 2, 400);
-	play_tone(gpio_pin, d_minor[1] * 2, 1000);
-
-	sleep_ms(900);
-
-	play_tone(gpio_pin, d_minor[0] * 2, 400);
-	play_tone(gpio_pin, d_minor[1] * 2, 400);
-	play_tone(gpio_pin, d_minor[2] * 2, 400);
-	play_tone(gpio_pin, d_minor[3] * 2, 400);
-	play_tone(gpio_pin, d_minor[4] * 2, 400);
-	play_tone(gpio_pin, d_minor[5] * 2, 400);
-	play_tone(gpio_pin, d_minor[6] * 2, 400);
-	play_tone(gpio_pin, d_minor[7] * 2, 400);
-
-	sleep_ms(1000);
+	play_tone(gpio_pin, d_minor[6] * 3, 300);
+	play_tone(gpio_pin, d_minor[7] * 3, 500);
+	play_tone(gpio_pin, d_minor[6] * 3, 300);
+	play_tone(gpio_pin, d_minor[4] * 3, 300);
+	play_tone(gpio_pin, d_minor[2] * 2, 300);
 }
