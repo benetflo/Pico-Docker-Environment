@@ -1,0 +1,9 @@
+name: Build Firmware
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
