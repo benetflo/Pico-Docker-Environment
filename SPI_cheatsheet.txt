@@ -1,0 +1,48 @@
+SDA (SS / CS - Chip select):
+  Funktion: Signal som styr när RC522 ska kommunicera via SPI
+  Hur det fungerar: Pico drar denna pin lågt (LOW) för att säga "Nu pratar jag med dig", vilket aktiverar RC522. oM DU HAR FLERA SPI-enheter på samma buss används olika CS/SDA-pinnar för att välja vilken enhet som ska kommunicera.
+  Varför den behövs: SPI är en bussteknik där flera enheter kan dela samma klocka och data-linjer CS/SDA talar om vilken enhet som "lyssnar" just nu.
+
+Extra info:
+  En buss är en uppsättning delade ledningar(signaler) som flera komponenter kan använda för att kommunicera med en mikrokontroller.
+  Man kan ha hur många enheter som helst på en SPI-buss. Det begränsas av hur många lediga pins man har som är kompatibla för CS (SDA). Varje enhet måste ha en egen unik SDA/CS-pin.
+  MOSI, MISO, SCK är gemensamma pins på bussen. Varje enhet har en egen SDA/CS/SS.
+  Om man kör gpio_put(pin, 0); på en SDA-pin så aktiverar man den modulen och den lyssnar då på SPI-bussen. OBS sätt till HIGH för att "stänga av" den.
+  
+SCK (Serial Clock)
+  Funktion: Klocksignal som styr synkroniseringen mellan RC522 och mikrokontrollern.
+  Hur det fungerar: Varje gång klockan pulserar (ofta upp till flera MHz), skickas eller tas emot ett bitvärde. RC522 synkar sin kommunikation till denna signal.
+  Varför den behövs: SPI är en synkron protokollform. Alltså krävs en gemensam klocksignal för att veta när bitar ska läsas och skrivas.
+
+Extra info:
+  En klocksignal är en fyrkantvåg(signal som går mellan HIGH och LOW) som anger när bitar ska läsas och skrivas på SPI-bussen.
+  SPI-hårdvaran genererar en egen SPI-klocka(SCK) med en viss frekvens som måste vara kompatibel med vad RC522 klarar. Just RC522 fungerar bäst med MAX 10 MHz SPI-hastighet
+  MHz = miljoner cykler per sekund -> 1 000 000 pulser per sekund. T.ex. om SCK = 4MHz -> SPI skickar 4 miljoner bitar per sekund (i bästa fall).
+  Varje gång SCK går från hög till låg eller tvärtom beroende på inställningar så flyttas en bit av data i SPI-bussen. Dvs MISO eller MOSI läser eller skriver en ny bit.
+
+MOSI (Master Out Slave In)
+  Funktion: Skickar data från mikrokontrollern till RC522
+  Hur det fungerar: När du till exempel vill säga "Läs tagg", skickas ett kommando som en följd av bitar via MOSI till RC522
+  Varför den behövs: All styrning sker från mikrokontrollern (Mastern), så MOSI krävs för att RC522 (Slave) ska få sina instruktioner.
+
+MISO (Master In Slave Out)
+  Funktion: Skickar data från RC522 tillbaka till mikrokontrollern
+  Hur det fungerar: Efter att RC522 t.ex. har läst en tagg, skickar den datan (t.ex. UID) tillbaka via MISO
+  Varför den behövs: För att få tillbaka läsresultat, status eller andra svar från RFID-läsaren
+
+IRQ (Interrupt Request - valfri)
+  Funktion: Kan meddela mikrokontrollern när något hänt, t.ex. en tagg detekteras
+  Hur det fungerar: RC522 sätter denna pin till ett specifikt logiskt tillstånd (ofta LOW) när något intressant händer, vilket mikrokontrollern kan använda för att reagera direkt (utan polling)
+  Varför den behövs: För effektivitet. Du slipper konstant fråga "Har något hänt?", utan får en signal när något faktiskt händer. Obs: Många projekt använder inte denna pin.
+
+Extra info:
+  Polling är när Pico hela tiden aktivt frågar en pin eller enhet om något har hänt. T.ex. ett if statement. Lös med en GPIO IRQ!
+
+RST (Reset)
+  Funktion: Återställer RC522 till sitt grundtillstånd
+  Hur det fungerar: Genom att dra pinnen LOW i ett ögonblick tvingas RC522 att starta om.
+  Varför den behövs: Bra för att nollställa RC522 vid uppstart eller om något går fel under drift.
+
+Extra info:
+  Om RC522 slutar svara, fastnar eller kommunicerar fel -> dra RST till LOW i ett kort ögonblick (100ms) sedan HIGH igen. Detta nollställer chipet till ett fungerande startläge.
+  Kan va bra att göra i setup också!
